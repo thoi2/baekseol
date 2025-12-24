@@ -11,23 +11,23 @@ import java.util.List;
 @Repository
 public interface PaymentRepository extends JpaRepository<Payment, Long> {
 
-    // paymentId로 검색 (기본 제공되지만 명시적으로 작성 가능)
-    Optional<Payment> findByPaymentId(Long paymentId);
+//    // paymentId로 검색 (기본 제공되지만 명시적으로 작성 가능)
+//    Optional<Payment> findByPaymentId(Long paymentId);
 
     // paymentKey로 검색 (중복 결제 방지)
     Optional<Payment> findByPaymentKey(String paymentKey);
 
-    // paymentKey 존재 여부 확인 (중복 결제 방지)
-    boolean existsByPaymentKey(String paymentKey);
-
-    // orderId로 검색 (중복 결제 방지)
-    Optional<Payment> findByOrderId(String orderId);
-
-    // 사용자의 결제 목록
-    List<Payment> findByUserId(Long userId);
-
-    // 상태별 조회
-    List<Payment> findByStatus(TransactionStatus status);
+//    // paymentKey 존재 여부 확인 (중복 결제 방지)
+//    boolean existsByPaymentKey(String paymentKey);
+//
+//    // orderId로 검색 (중복 결제 방지)
+//    Optional<Payment> findByOrderId(String orderId);
+//
+//    // 사용자의 결제 목록
+//    List<Payment> findByUserId(Long userId);
+//
+//    // 상태별 조회
+//    List<Payment> findByStatus(TransactionStatus status);
 
     // 사용자 결제 목록 (최신순)
     List<Payment> findByUserIdOrderByCreatedAtDesc(Long userId);

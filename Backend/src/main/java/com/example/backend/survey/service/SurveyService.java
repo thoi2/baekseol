@@ -100,7 +100,7 @@ public class SurveyService {
 
         Survey savedSurvey = surveyRepository.save(survey);
         // 포인트 결제
-        pointService.usePointsForSurvey(client, survey);
+        pointService.usePointsForSurvey(survey);
         surveyStatisticsService.createParticipantStatistics(survey);
 
         return SurveyResDto.from(savedSurvey);
@@ -250,7 +250,7 @@ public class SurveyService {
 
         surveyStatisticsService.updateParticipantStatistics(survey, userSurvey);
 
-        pointService.chargePointsForSurvey(participant, survey);
+        pointService.chargePointsForSurvey(participant.getId(), survey);
     }
 
     // 질문 목록 조회 (설문 참여)
@@ -292,7 +292,7 @@ public class SurveyService {
         if (!clientId.equals(targetClient.getId())) throw new CustomException(ERROR_CLOSE_SURVEY_NOT_PERMISSION);
         if (target.getState() != SurveyState.IN_PROCESS) throw new CustomException(ERROR_CLOSE_SURVEY_ALREADY_DONE);
         target.setState(SurveyState.CANCELED);
-        pointService.refundSPointsForSurvey(targetClient, target);
+        pointService.refundSPointsForSurvey(target);
     }
 
 

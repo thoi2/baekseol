@@ -8,7 +8,15 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "point_record")
+@Table(
+        name = "point_record",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "uk_point_user_ref",
+                        columnNames = {"user_id", "reference_type", "reference_id"}
+                )
+        }
+)
 @Getter
 @Setter
 @NoArgsConstructor

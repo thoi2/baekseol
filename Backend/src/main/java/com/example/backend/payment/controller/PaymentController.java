@@ -4,7 +4,6 @@ package com.example.backend.payment.controller;
 import com.example.backend.global.common.ApiResponse;
 import com.example.backend.payment.dto.PaymentRequest;
 import com.example.backend.payment.dto.WithdrawalRequestDto;
-import com.example.backend.payment.exception.PaymentSuccessType;
 import com.example.backend.payment.service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

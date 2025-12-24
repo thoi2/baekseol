@@ -94,7 +94,7 @@ public class PointService {
 
     @Transactional
     public void chargePoints(Payment payment) {
-        UserEntity user = userRepository.findById(payment.getUserId())
+        UserEntity user = userRepository.findByIdForUpdate(payment.getUserId())
                 .orElseThrow(() -> new CustomException(ERROR_USER_NOT_FOUND));
 
         Long amount = payment.getAmount()-PAYMENT_FEE;
@@ -124,7 +124,10 @@ public class PointService {
     }
 
     @Transactional
-    public void chargePointsForSurvey(UserEntity user, Survey survey) {
+    public void chargePointsForSurvey(Long userId, Survey survey) {
+
+        UserEntity user = userRepository.findByIdForUpdate(userId)
+                .orElseThrow(() -> new CustomException(ERROR_USER_NOT_FOUND));
         Long amount = survey.getReward();
         if (amount == null || amount <= 0) throw new CustomException(ERROR_INVALID_AMOUNT);
 
@@ -194,11 +197,11 @@ public class PointService {
 
 
     @Transactional
-    public void refundSPointsForSurvey(UserEntity user, Survey survey) {
-        // 1. 요청한 user가 해당 설문 등록자인지 확인
-        if (!user.getId().equals(survey.getClient().getId())) {
-            throw new CustomException(PointErrorType.ERROR_NOT_SURVEY_OWNER);
-        }
+    public void refundSPointsForSurvey(Survey survey) {
+        Long userId = survey.getClient().getId();  // 설문에 있는 등록자 ID 사용
+
+        UserEntity user = userRepository.findByIdForUpdate(userId)
+                .orElseThrow(() -> new CustomException(ERROR_USER_NOT_FOUND));
 
         Long surveyId = survey.getSurveyId();
 
@@ -281,7 +284,7 @@ public class PointService {
 
     @Transactional
     public void usePoints(WithdrawalRequest withdrawal) {
-        UserEntity user = userRepository.findById(withdrawal.getUserId())
+        UserEntity user = userRepository.findByIdForUpdate(withdrawal.getUserId())
                 .orElseThrow(() -> new CustomException(ERROR_USER_NOT_FOUND));
 
         Long amount = withdrawal.getAmount();
@@ -312,7 +315,11 @@ public class PointService {
     }
 
     @Transactional
-    public void usePointsForSurvey(UserEntity user, Survey survey) {
+    public void usePointsForSurvey(Survey survey) {
+        Long userId = survey.getClient().getId();  // 설문에 있는 등록자 ID 사용
+
+        UserEntity user = userRepository.findByIdForUpdate(userId)
+                .orElseThrow(() -> new CustomException(ERROR_USER_NOT_FOUND));
         Integer questionCnt = survey.getQuestionCnt();
         Integer maxResponse = survey.getMaxResponse();
         Long reward = survey.getReward();

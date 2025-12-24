@@ -15,8 +15,8 @@ import java.util.Optional;
 public interface WithdrawalRequestRepository 
         extends JpaRepository<WithdrawalRequest, Long> {
     List<WithdrawalRequest> findByUserId(Long userId);
-    List<WithdrawalRequest> findByStatus(TransactionStatus status);
-    Optional<WithdrawalRequest> findByTossPayoutId(String tossPayoutId);
+//    List<WithdrawalRequest> findByStatus(TransactionStatus status);
+//    Optional<WithdrawalRequest> findByTossPayoutId(String tossPayoutId);
     // 환급금액 합계(전체·오늘) 조회
     @Query("SELECT COALESCE(SUM(wr.amount), 0) FROM WithdrawalRequest wr WHERE wr.createdAt BETWEEN :start AND :end")
     Long sumAmountByDateRange(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);

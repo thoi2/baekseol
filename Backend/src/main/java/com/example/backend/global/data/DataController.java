@@ -489,7 +489,7 @@ public class DataController {
 
         survey.setQuestions(questions);
         survey.setQuestionCnt(questions.size());
-        pointService.usePointsForSurvey(client, survey);
+        pointService.usePointsForSurvey(survey);
         surveyRepository.save(survey);
         surveyStatisticsService.createParticipantStatistics(survey);
     }

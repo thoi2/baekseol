@@ -83,7 +83,7 @@ public class SurveyDeadlineBatchConfig {
     public ItemProcessor<Survey, Survey> surveyDeadlineProcessor() {
         return survey -> {
             survey.setState(SurveyState.DONE);
-            pointService.refundSPointsForSurvey(survey.getClient(), survey);
+            pointService.refundSPointsForSurvey(survey);
             return survey;
         };
     }

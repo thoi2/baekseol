@@ -8,6 +8,6 @@ import java.util.List;
 
 @Repository
 public interface PaymentEventRepository extends JpaRepository<PaymentEvent, Long> {
-    List<PaymentEvent> findByPayment_PaymentId(Long paymentId);
-    List<PaymentEvent> findByPayment_PaymentIdOrderByCreatedAtDesc(Long paymentId);
+//    List<PaymentEvent> findByPayment_PaymentId(Long paymentId);
+//    List<PaymentEvent> findByPayment_PaymentIdOrderByCreatedAtDesc(Long paymentId);
 }
